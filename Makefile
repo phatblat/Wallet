@@ -56,8 +56,9 @@ build:
 test: build
 	swift test --enable-test-discovery
 
+# make run ARGS="asdf"
 run: build
-	${EXECUTABLE_DIRECTORY}/${BINARY_NAME}
+	${EXECUTABLE_DIRECTORY}/${BINARY_NAME} $(ARGS)
 
 clean:
 	swift package clean
