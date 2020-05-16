@@ -35,6 +35,17 @@ PLATFORM = x86_64-unknown-linux
 EXECUTABLE_DIRECTORY = ./.build/${PLATFORM}/debug
 endif
 
+describe:
+	swift package describe
+
+resolve:
+	swift package resolve
+
+dependencies: resolve
+	swift package show-dependencies
+
+update: resolve
+	swift package update
 
 xcproj:
 	swift package generate-xcodeproj
@@ -50,6 +61,7 @@ run: build
 
 clean:
 	swift package clean
+	swift package reset
 
 distclean:
 	rm -rf Packages
@@ -68,4 +80,7 @@ ifeq ($(UNAME), Linux)
 	  make && make install
 endif
 
-.PHONY: build test distclean init run xcproj
+version:
+	swift package tools-version
+
+.PHONY: build dependencies describe distclean init resolve run test update version xcproj
