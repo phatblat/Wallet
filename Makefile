@@ -2,8 +2,14 @@
 # Makefile
 # signpass
 #
+# https://github.com/phatblat/Makefile-swift
 
-BINARY_NAME = signpass
+################################################################################
+#
+# Variables
+#
+
+CMD_NAME = signpass
 SHELL = /bin/sh
 
 # trunk
@@ -25,7 +31,7 @@ SWIFTC_FLAGS =
 LINKER_FLAGS = -Xlinker -L/usr/local/lib
 PLATFORM = x86_64-apple-macosx
 EXECUTABLE_DIRECTORY = ./.build/${PLATFORM}/debug
-TEST_BUNDLE = ${BINARY_NAME}PackageTests.xctest
+TEST_BUNDLE = ${CMD_NAME}PackageTests.xctest
 endif
 ifeq ($(UNAME), Linux)
 SWIFTC_FLAGS = -Xcc -fblocks
@@ -34,6 +40,11 @@ PATH_TO_SWIFT = /home/vagrant/swiftenv/versions/$(SWIFT_VERSION)
 PLATFORM = x86_64-unknown-linux
 EXECUTABLE_DIRECTORY = ./.build/${PLATFORM}/debug
 endif
+
+################################################################################
+#
+# Targets
+#
 
 describe:
 	swift package describe
@@ -58,7 +69,7 @@ test: build
 
 # make run ARGS="asdf"
 run: build
-	${EXECUTABLE_DIRECTORY}/${BINARY_NAME} $(ARGS)
+	${EXECUTABLE_DIRECTORY}/${CMD_NAME} $(ARGS)
 
 clean:
 	swift package clean
