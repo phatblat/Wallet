@@ -1,5 +1,6 @@
 *.hprof
 *.iml
+*.pkpass
 *.xccheckout
 *.xcscmblueprint
 .DS_Store
