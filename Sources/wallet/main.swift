@@ -1,0 +1,3 @@
+import WalletKit
+
+Pass.main()

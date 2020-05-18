@@ -2,7 +2,6 @@
 # Makefile
 # signpass
 #
-# https://github.com/phatblat/Makefile-swift
 
 ################################################################################
 #
@@ -45,6 +44,9 @@ endif
 #
 # Targets
 #
+
+.PHONY: build dependencies describe distclean
+.PHONY: init list resolve run test update version xcproj
 
 describe:
 	swift package describe
@@ -94,5 +96,3 @@ endif
 
 version:
 	swift package tools-version
-
-.PHONY: build dependencies describe distclean init resolve run test update version xcproj
