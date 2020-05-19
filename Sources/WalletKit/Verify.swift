@@ -17,6 +17,15 @@ extension Pass {
         var packageUrl: URL?
 
         mutating func validate() throws {
+
+            guard let path = packagePath else {
+                throw ValidationError("Please provide path to the pass package.")
+            }
+
+            debugPrint("path: \(path)")
+        }
+
+        func run() throws {
             let currentDir = URL(fileURLWithPath: ".", isDirectory: true)
             debugPrint("currentDir: \(currentDir)")
 
@@ -24,15 +33,8 @@ extension Pass {
                 throw ValidationError("Please provide path to the pass package.")
             }
 
-            debugPrint("path: \(path)")
-            packageUrl = URL(fileURLWithPath: path, isDirectory: false, relativeTo: currentDir)
-        }
-
-        func run() throws {
-            debugPrint("packageUrl: \(packageUrl)")
-            guard let passUrl = packageUrl else {
-                throw ValidationError("Package path not found: \(String(describing: packagePath))")
-            }
+            let passUrl = URL(fileURLWithPath: path, isDirectory: false, relativeTo: currentDir)
+            debugPrint("passUrl: \(passUrl)")
 
             // get a temporary place to unpack the pass
             let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
@@ -49,7 +51,12 @@ extension Pass {
 
             switch process.terminationStatus {
             case 0:
-                debugPrint("unzip completed")
+                debugPrint("unzip completed in \(tempPath)")
+                debugPrint("extracted pass contents:")
+                let contents = try FileManager.default.contentsOfDirectory(atPath: tempPath)
+                contents.forEach { file in
+                    debugPrint(" - \(file)")
+                }
             default:
                 print("Error unzipping pass: \(process.terminationStatus) \(process.terminationReason)")
             }
