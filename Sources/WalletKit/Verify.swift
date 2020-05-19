@@ -1,4 +1,5 @@
 import ArgumentParser
+import Crypto
 import Foundation
 
 extension Pass {
@@ -66,12 +67,13 @@ extension Pass {
         /// - Parameter manifest: File URL to the extracted pass manifest.
         func validate(manifest manifestUrl: URL) throws -> Bool {
             let data = try Data(contentsOf: manifestUrl)
-            debugPrint("manifest.json: \(String(describing: String(data: data, encoding: .utf8)))")
+            debugPrint("manifest.json: \(String(data: data, encoding: .utf8)!)")
 
             let manifest = try JSONSerialization.jsonObject(with: data, options: .init(rawValue: 0)) as! [String: String]
+            var manifestCount = manifest.count
 
             guard let enumerator = FileManager.default.enumerator(at: manifestUrl.deletingLastPathComponent(),
-                                                            includingPropertiesForKeys: [.fileSizeKey, .isDirectoryKey])
+                                                                  includingPropertiesForKeys: [.fileSizeKey, .isDirectoryKey, .isSymbolicLinkKey])
                 else { fatalError("Can't create directory enumerator") }
 
             for case let url as URL in enumerator {
@@ -83,6 +85,12 @@ extension Pass {
 
                 let fileName = url.lastPathComponent
 
+                // No symlinks
+                if let isLink = resourceValues.isSymbolicLink, isLink {
+                    print("Pass contains a symlink, \(fileName), which is illegal")
+                    return false
+                }
+
                 // Ignore manifest and signature
                 if ["manifest.json", "signature"].contains(fileName) {
                     continue
@@ -93,10 +101,30 @@ extension Pass {
                     return false
                 }
 
-                // TODO: Get SHA1 hash of file
+                // Compare SHA1 hash in manifest to that of file
+                guard manifestHash == url.sha1 else {
+                    print("For file \(fileName), manifest's listed SHA1 hash \(manifestHash) doesn't match computed hash, \(url.sha1)")
+                    return false
+                }
+
+                // File hash is valid
+                // Decrement count of files
+                manifestCount -= 1
+            }
+
+            // Check for extra manifest entries not found in bundle
+            if manifestCount != 0 {
+                print("Pass is missing files listed in the manifest: \(manifest)")
+                return false
             }
 
             return true
         }
+    }
+}
+
+extension URL {
+    var sha1: String {
+        Insecure.SHA1.hash(data: dataRepresentation).description
     }
 }
