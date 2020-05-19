@@ -1,6 +1,6 @@
 #
 # Makefile
-# signpass
+# Wallet
 #
 
 ################################################################################
@@ -8,7 +8,7 @@
 # Variables
 #
 
-CMD_NAME = signpass
+CMD_NAME = wallet
 SHELL = /bin/sh
 
 # trunk

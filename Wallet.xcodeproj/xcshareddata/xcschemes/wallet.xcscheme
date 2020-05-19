@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "signpass::signpass"
-               BuildableName = "signpass"
-               BlueprintName = "signpass"
-               ReferencedContainer = "container:signpass.xcodeproj">
+               BlueprintIdentifier = "Wallet::wallet"
+               BuildableName = "wallet"
+               BlueprintName = "wallet"
+               ReferencedContainer = "container:Wallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "signpass::signpassTests"
-               BuildableName = "signpassTests.xctest"
-               BlueprintName = "signpassTests"
-               ReferencedContainer = "container:signpass.xcodeproj">
+               BlueprintIdentifier = "Wallet::WalletKitTests"
+               BuildableName = "WalletKitTests.xctest"
+               BlueprintName = "WalletKitTests"
+               ReferencedContainer = "container:Wallet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -45,8 +45,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/phatblat/dev/swift/signpass"
+      useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -55,10 +54,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "signpass::signpass"
-            BuildableName = "signpass"
-            BlueprintName = "signpass"
-            ReferencedContainer = "container:signpass.xcodeproj">
+            BlueprintIdentifier = "Wallet::wallet"
+            BuildableName = "wallet"
+            BlueprintName = "wallet"
+            ReferencedContainer = "container:Wallet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>

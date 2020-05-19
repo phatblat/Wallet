@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "signpass::signpass"
-               BuildableName = "signpass"
-               BlueprintName = "signpass"
-               ReferencedContainer = "container:signpass.xcodeproj">
+               BlueprintIdentifier = "Wallet::WalletKit"
+               BuildableName = "WalletKit.framework"
+               BlueprintName = "WalletKit"
+               ReferencedContainer = "container:Wallet.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Wallet::wallet"
+               BuildableName = "wallet"
+               BlueprintName = "wallet"
+               ReferencedContainer = "container:Wallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +46,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "signpass::signpassTests"
-               BuildableName = "signpassTests.xctest"
-               BlueprintName = "signpassTests"
-               ReferencedContainer = "container:signpass.xcodeproj">
+               BlueprintIdentifier = "Wallet::WalletKitTests"
+               BuildableName = "WalletKitTests.xctest"
+               BlueprintName = "WalletKitTests"
+               ReferencedContainer = "container:Wallet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -50,16 +64,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "signpass::signpass"
-            BuildableName = "signpass"
-            BlueprintName = "signpass"
-            ReferencedContainer = "container:signpass.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
