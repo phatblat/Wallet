@@ -84,6 +84,7 @@ extension Pass {
                 }
 
                 let fileName = url.lastPathComponent
+                debugPrint("fileName: \(fileName)")
 
                 // No symlinks
                 if let isLink = resourceValues.isSymbolicLink, isLink {
@@ -100,6 +101,8 @@ extension Pass {
                     print("No entry in manifest for file")
                     return false
                 }
+                debugPrint("manifestHash: \(manifestHash)")
+                debugPrint("file SHA1: \(url.sha1)")
 
                 // Compare SHA1 hash in manifest to that of file
                 guard manifestHash == url.sha1 else {
@@ -125,6 +128,8 @@ extension Pass {
 
 extension URL {
     var sha1: String {
-        Insecure.SHA1.hash(data: dataRepresentation).description
+        let data = try! Data(contentsOf: self)
+        return Insecure.SHA1.hash(data: data)
+            .map { String(format: "%02hhx", $0) }.joined()
     }
 }
