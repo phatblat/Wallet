@@ -26,7 +26,7 @@ final class WalletKitTests: XCTestCase {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(output, "OVERVIEW: Sign or verify an Apple Wallet pass.\n\nUSAGE: pass <subcommand>\n\nOPTIONS:\n  -h, --help              Show help information.\n\nSUBCOMMANDS:\n  sign                    Sign a pass package.\n  verify                  Unzip and verify a signed pass\'s signature and\n                          manifest.\n\n")
     }
 
     /// Returns path to the built products directory.
