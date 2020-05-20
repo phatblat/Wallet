@@ -12,7 +12,7 @@ final class WalletKitTests: XCTestCase {
             return
         }
 
-        let fooBinary = productsDirectory.appendingPathComponent("signpass")
+        let fooBinary = productsDirectory.appendingPathComponent("wallet")
 
         let process = Process()
         process.executableURL = fooBinary
