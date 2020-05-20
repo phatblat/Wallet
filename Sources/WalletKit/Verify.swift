@@ -60,7 +60,12 @@ extension Pass {
 
             let manifestUrl = tempDir.appendingPathComponent("manifest.json", isDirectory: false)
 
-            _ = try validate(manifest: manifestUrl)
+            guard try validate(manifest: manifestUrl) else {
+                print("\n*** FAILED ***")
+                return
+            }
+
+            print("\n*** SUCCEEDED ***")
         }
 
         /// Validates a pass manifest.
