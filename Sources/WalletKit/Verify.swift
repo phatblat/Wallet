@@ -3,7 +3,10 @@ import Crypto
 import Foundation
 
 extension Pass {
-    struct Verify: ParsableCommand {
+    class Verify: ParsableCommand {
+
+        required init() {}
+
         static var configuration = CommandConfiguration(
             abstract: "Unzip and verify a signed pass's signature and manifest.",
             discussion: "This DOES NOT validate pass content."
@@ -17,23 +20,26 @@ extension Pass {
 
         var packageUrl: URL?
 
-        mutating func validate() throws {
+        func validate() throws {
             guard let path = packagePath else {
                 throw ValidationError("Please provide path to the pass package.")
             }
             debugPrint("path: \(path)")
-        }
 
-        func run() throws {
+            guard FileManager.default.fileExists(atPath: path) else {
+                throw ValidationError("File not found at path: \(path)")
+            }
+
             let currentDir = URL(fileURLWithPath: ".", isDirectory: true)
             debugPrint("currentDir: \(currentDir)")
 
-            guard let path = packagePath else {
-                throw ValidationError("Please provide path to the pass package.")
-            }
-
             let passUrl = URL(fileURLWithPath: path, isDirectory: false, relativeTo: currentDir)
             debugPrint("passUrl: \(passUrl)")
+            packageUrl = passUrl
+        }
+
+        func run() throws {
+            guard let passUrl = packageUrl else { fatalError("Lost url to pass package") }
 
             // get a temporary place to unpack the pass
             let tempDir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(passUrl.lastPathComponent, isDirectory: true)
