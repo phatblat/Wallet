@@ -17,7 +17,7 @@ SHELL = /bin/sh
 # Swift 5.3
 # SWIFT_VERSION = swift-5.3-DEVELOPMENT-SNAPSHOT-2020-04-21-a
 
-SWIFT_VERSION = 5.2.2
+SWIFT_VERSION = 5.2.4
 
 # set EXECUTABLE_DIRECTORY according to your specific environment
 # run swift build and see where the output executable is created
@@ -45,42 +45,13 @@ endif
 # Targets
 #
 
-.PHONY: build dependencies describe distclean
-.PHONY: init list resolve run test update version xcproj
+.PHONY: version
+version:
+	xcodebuild -version
+	swift --version
+	swift package tools-version
 
-describe:
-	swift package describe
-
-resolve:
-	swift package resolve
-
-dependencies: resolve
-	swift package show-dependencies
-
-update: resolve
-	swift package update
-
-xcproj:
-	swift package generate-xcodeproj
-
-build:
-	swift build $(SWIFTC_FLAGS) $(LINKER_FLAGS)
-
-test: build
-	swift test --enable-test-discovery
-
-# make run ARGS="asdf"
-run: build
-	${EXECUTABLE_DIRECTORY}/${CMD_NAME} $(ARGS)
-
-clean:
-	swift package clean
-	swift package reset
-
-distclean:
-	rm -rf Packages
-	swift package clean
-
+.PHONY: init
 init:
 	- swiftenv install $(SWIFT_VERSION)
 	swiftenv local $(SWIFT_VERSION)
@@ -94,5 +65,46 @@ ifeq ($(UNAME), Linux)
 	  make && make install
 endif
 
-version:
-	swift package tools-version
+.PHONY: xcproj
+xcproj:
+	swift package generate-xcodeproj
+
+.PHONY: clean
+clean:
+	xcodebuild clean
+	swift package clean
+	swift package reset
+
+.PHONY: distclean
+distclean:
+	rm -rf Packages
+	swift package clean
+
+.PHONY: describe
+describe:
+	swift package describe
+
+.PHONY: resolve
+resolve:
+	swift package resolve
+
+.PHONY: dependencies
+dependencies: resolve
+	swift package show-dependencies
+
+.PHONY: update
+update: resolve
+	swift package update
+
+.PHONY: build
+build:
+	swift build $(SWIFTC_FLAGS) $(LINKER_FLAGS)
+
+.PHONY: test
+test: build
+	swift test --enable-test-discovery
+
+.PHONY: run
+# make run ARGS="asdf"
+run: build
+	${EXECUTABLE_DIRECTORY}/${CMD_NAME} $(ARGS)
