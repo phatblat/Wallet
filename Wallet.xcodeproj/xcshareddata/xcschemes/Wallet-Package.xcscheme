@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Wallet::WalletKit"
-               BuildableName = "WalletKit.framework"
-               BlueprintName = "WalletKit"
+               BlueprintIdentifier = "Wallet::wallet"
+               BuildableName = "wallet"
+               BlueprintName = "wallet"
                ReferencedContainer = "container:Wallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Wallet::wallet"
-               BuildableName = "wallet"
-               BlueprintName = "wallet"
+               BlueprintIdentifier = "Wallet::WalletKit"
+               BuildableName = "WalletKit.framework"
+               BlueprintName = "WalletKit"
                ReferencedContainer = "container:Wallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
