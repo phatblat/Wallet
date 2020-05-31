@@ -3,6 +3,7 @@ import Crypto
 import Foundation
 
 extension Pass {
+    /// Handles the verify command.
     class Verify: ParsableCommand {
 
         required init() {}
@@ -12,14 +13,18 @@ extension Pass {
             discussion: "This DOES NOT validate pass content."
         )
 
+        /// --path or -p argument specifying path to pass package.
         @Option(name: NameSpecification([
             NameSpecification.Element.short,
             NameSpecification.Element.customLong("path")]),
                 help: "Path to signed .pkpass file to verify.")
         var packagePath: String?
 
+        /// Post-validation URL to pass package.
         var packageUrl: URL?
 
+        /// Validates the path argument.
+        /// - Throws: ValidationError when path missing or invalid.
         func validate() throws {
             guard let path = packagePath else {
                 throw ValidationError("Please provide path to the pass package.")
@@ -38,6 +43,8 @@ extension Pass {
             packageUrl = passUrl
         }
 
+        /// Runs the command.
+        /// - Throws: Errors if there are problems acess the pass on the filesystem.
         func run() throws {
             guard let passUrl = packageUrl else { fatalError("Lost url to pass package") }
 
@@ -66,7 +73,7 @@ extension Pass {
 
             let manifestUrl = tempDir.appendingPathComponent("manifest.json", isDirectory: false)
 
-            guard try validate(manifest: manifestUrl) else {
+            guard try verify(manifest: manifestUrl) else {
                 print("\n*** FAILED ***")
                 return
             }
@@ -74,9 +81,9 @@ extension Pass {
             print("\n*** SUCCEEDED ***")
         }
 
-        /// Validates a pass manifest.
+        /// Verifies a pass manifest.
         /// - Parameter manifest: File URL to the extracted pass manifest.
-        func validate(manifest manifestUrl: URL) throws -> Bool {
+        func verify(manifest manifestUrl: URL) throws -> Bool {
             let data = try Data(contentsOf: manifestUrl)
             debugPrint("manifest.json: \(String(data: data, encoding: .utf8)!)")
 
@@ -138,6 +145,7 @@ extension Pass {
 }
 
 extension URL {
+    /// Calculats a SHA-1 hash of the contents of the file at this URL.
     var sha1: String {
         let data = try! Data(contentsOf: self)
         return Insecure.SHA1.hash(data: data)
