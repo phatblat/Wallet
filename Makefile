@@ -31,6 +31,7 @@ LINKER_FLAGS = -Xlinker -L/usr/local/lib
 PLATFORM = x86_64-apple-macosx
 EXECUTABLE_DIRECTORY = ./.build/${PLATFORM}/debug
 TEST_BUNDLE = ${CMD_NAME}PackageTests.xctest
+TEST_RESOURCES_DIRECTORY = ./.build/${PLATFORM}/debug/${TEST_BUNDLE}/Contents/Resources
 endif
 ifeq ($(UNAME), Linux)
 SWIFTC_FLAGS = -Xcc -fblocks
@@ -38,7 +39,10 @@ LINKER_FLAGS = -Xlinker -rpath -Xlinker .build/debug
 PATH_TO_SWIFT = /home/vagrant/swiftenv/versions/$(SWIFT_VERSION)
 PLATFORM = x86_64-unknown-linux
 EXECUTABLE_DIRECTORY = ./.build/${PLATFORM}/debug
+TEST_RESOURCES_DIRECTORY = ${EXECUTABLE_DIRECTORY}
 endif
+
+RUN_RESOURCES_DIRECTORY = ${EXECUTABLE_DIRECTORY}
 
 ################################################################################
 #
@@ -93,12 +97,22 @@ update: resolve
 	swift package update
 
 .PHONY: build
-build:
+build: copyRunResources
 	swift build $(SWIFTC_FLAGS) $(LINKER_FLAGS)
 
 .PHONY: test
-test: build
+test: build copyTestResources
 	swift test --enable-test-discovery
+
+.PHONY: copyRunResources
+copyRunResources:
+	mkdir -p ${RUN_RESOURCES_DIRECTORY}
+	cp -r Resources/* ${RUN_RESOURCES_DIRECTORY}
+
+.PHONY: copyTestResources
+copyTestResources:
+	mkdir -p ${TEST_RESOURCES_DIRECTORY}
+	cp -r Resources/* ${TEST_RESOURCES_DIRECTORY}
 
 .PHONY: run
 # make run ARGS="asdf"
