@@ -29,9 +29,9 @@ ifeq ($(UNAME), Darwin)
 SWIFTC_FLAGS =
 LINKER_FLAGS = -Xlinker -L/usr/local/lib
 PLATFORM = x86_64-apple-macosx
-EXECUTABLE_DIRECTORY = ./.build/${PLATFORM}/debug
+EXECUTABLE_DIRECTORY = ./.build/debug
 TEST_BUNDLE = ${CMD_NAME}PackageTests.xctest
-TEST_RESOURCES_DIRECTORY = ./.build/${PLATFORM}/debug/${TEST_BUNDLE}/Contents/Resources
+TEST_RESOURCES_DIRECTORY = ./.build/debug/${TEST_BUNDLE}/Contents/Resources
 endif
 ifeq ($(UNAME), Linux)
 SWIFTC_FLAGS = -Xcc -fblocks
