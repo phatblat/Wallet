@@ -103,7 +103,7 @@ build: copyRunResources
 
 .PHONY: test
 test: build copyTestResources
-	swift test --enable-test-discovery
+	swift test
 
 .PHONY: copyRunResources
 copyRunResources:
